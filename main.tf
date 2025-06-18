@@ -2,8 +2,8 @@
 terraform {
   required_providers {
     azurerm = {
-        source = "hashicorp/azurerm"
-        version = "4.33.0"
+      source  = "hashicorp/azurerm"
+      version = "4.33.0"
     }
   }
 }
@@ -13,35 +13,40 @@ provider "azurerm" {
   features {}
 }
 
+# Create a Resource Group in Azure to contain all resources
 resource "azurerm_resource_group" "rg" {
-  name     = "dev-web-rg-eastus"
+  name     = var.resource_group_name
   location = var.location
 }
 
+# Call the network module to provision:
+# - VNet, Subnet, NSG, Public IP, and NIC
 module "network" {
-  source                = "./modules/network"
-  location              = var.location
-  resource_group_name   = azurerm_resource_group.rg.name
+  source                  = "./modules/network"
+  location                = var.location
+  resource_group_name     = var.resource_group_name
 
-  vnet_name             = "dev-web-vnet"
-  vnet_address_space    = ["10.0.0.0/16"]
+  vnet_name               = var.vnet_name
+  vnet_address_space      = var.vnet_address_space
 
-  subnet_name           = "dev-web-subnet"
-  subnet_address_prefixes = ["10.0.2.0/24"]
+  subnet_name             = var.subnet_name
+  subnet_address_prefixes = var.subnet_address_prefixes
 
-  nsg_name              = "dev-web-nsg"
-  public_ip_name        = "dev-web-pip"
-  nic_name              = "dev-web-nic"
+  nsg_name                = var.nsg_name
+  public_ip_name          = var.public_ip_name
+  nic_name                = var.nic_name
 }
 
+# Call the compute module to provision:
+# - A Linux VM with SSH key login
 module "compute" {
   source              = "./modules/compute"
   location            = var.location
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = var.resource_group_name
 
-  vm_name             = "dev-web-vm"
+  vm_name             = var.vm_name
   nic_id              = module.network.nic_id
-  admin_username      = "azureuser"
-  public_key_path     = "~/.ssh/id_rsa.pub"
-  vm_size             = "Standard_B1s"
+  admin_username      = var.admin_username
+  public_key_path     = var.public_key_path
+  vm_size             = var.vm_size
 }
