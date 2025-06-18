@@ -1,0 +1,27 @@
+- name: Configure NGINX Web Server
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Ensure APT cache is up to date
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install NGINX
+      apt:
+        name: nginx
+        state: present
+
+    - name: Copy custom index.html
+      copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: "0644"
+
+    - name: Ensure NGINX is running and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: yes

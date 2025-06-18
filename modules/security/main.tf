@@ -14,7 +14,7 @@ resource "azurerm_network_security_group" "nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "22"
-    source_address_prefix      = "var.ssh_source_ip"
+    source_address_prefix      = var.ssh_source_ip
     destination_address_prefix = "*"
   }
 
@@ -30,4 +30,9 @@ resource "azurerm_network_security_group" "nsg" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+}
+
+resource "azurerm_network_interface_security_group_association" "nic_assoc" {
+  network_interface_id      = var.nic_id
+  network_security_group_id = azurerm_network_security_group.nsg.id
 }

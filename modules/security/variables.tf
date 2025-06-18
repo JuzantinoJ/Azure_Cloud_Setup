@@ -14,3 +14,10 @@ variable "ssh_source_ip" {
   description = "IP address range allowed to SSH (e.g., your home IP)"
   type        = string
 }
+
+
+variable "nic_id" {
+  description = "The ID of the NIC to associate with the NSG"
+  type        = string
+}
+

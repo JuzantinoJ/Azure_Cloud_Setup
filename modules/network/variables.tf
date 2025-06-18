@@ -29,3 +29,4 @@ variable "nic_name" {}
 # Name of the Resource Group in which all networking resources will be created
 # This allows the module to deploy into an existing resource group
 variable "resource_group_name" {}
+

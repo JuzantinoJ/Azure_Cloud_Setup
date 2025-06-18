@@ -15,3 +15,8 @@ variable "vm_name" {}
 variable "admin_username" {}
 variable "public_key_path" {}
 variable "vm_size" {}
+
+
+
+# Security module inputs
+variable "ssh_source_ip" {}

@@ -1,3 +1,37 @@
 .envrc
 .terraform
 .terraform.lock.hcl
+
+# Local Terraform state
+terraform.tfstate
+terraform.tfstate.backup
+
+# Crash logs
+crash.log
+
+# Terraform plan output
+*.tfplan
+
+# Sensitive variable files
+*.tfvars
+*.tfvars.json
+
+# Local .terraform directory (provider plugins, etc.)
+.terraform/
+
+# Override files (can contain secrets)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor folders
+.vscode/
+.idea/
+
+# Ansible
+ansible/*.retry

@@ -32,7 +32,6 @@ module "network" {
   subnet_name             = var.subnet_name
   subnet_address_prefixes = var.subnet_address_prefixes
 
-  nsg_name                = var.nsg_name
   public_ip_name          = var.public_ip_name
   nic_name                = var.nic_name
 }
@@ -49,4 +48,13 @@ module "compute" {
   admin_username      = var.admin_username
   public_key_path     = var.public_key_path
   vm_size             = var.vm_size
+}
+
+module "security" {
+  source              = "./modules/security"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  nsg_name            = var.nsg_name
+  ssh_source_ip       = var.ssh_source_ip
+  nic_id              = module.network.nic_id
 }

@@ -1,6 +1,6 @@
 # Global settings
-location            = "East US"
-resource_group_name = "dev-web-rg-eastus"
+location            =  "southeastasia"
+resource_group_name = "dev-web-rg-southeastasia"
 
 # Network config
 vnet_name               = "dev-web-vnet"
@@ -14,5 +14,7 @@ nic_name                = "dev-web-nic"
 # Compute config
 vm_name         = "dev-web-vm"
 admin_username  = "azureuser"
-public_key_path = "~/.ssh/id_rsa.pub"
+public_key_path = "/Users/juzantinojunadi/.ssh/id_ed25519_azure_vm.pub"
 vm_size         = "Standard_B1s"
+
+ssh_source_ip          = "0.0.0.0/0"  # or your own public IP for tighter security
